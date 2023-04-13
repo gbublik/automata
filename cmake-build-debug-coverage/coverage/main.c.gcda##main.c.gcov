@@ -1,0 +1,606 @@
+        -:    0:Source:/home/bublik/CLionProjects/automat/main.c
+        -:    0:Graph:/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/automat.dir/main.c.gcno
+        -:    0:Data:/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/automat.dir/main.c.gcda
+        -:    0:Runs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include <string.h>
+        -:    4:#include <glad/glad.h>
+        -:    5:#include <GLFW/glfw3.h>
+        -:    6:#include <time.h>
+        -:    7:#include <stdbool.h>
+        -:    8:#include <math.h>
+        -:    9:
+        -:   10:int width = 2000;
+        -:   11:int height = 1000;
+        -:   12:
+        -:   13:float zoom = 1;
+        -:   14:GLsizei zoomWidth, zoomHeight; //Zoomed resolution
+        -:   15:
+        -:   16:bool isMoveMode = false; //Is shift mode on
+        -:   17:double vx = 0; //Shift x
+        -:   18:double vy = 0; //Shift y
+        -:   19:double mx, my; //Mouse coordinate;
+        -:   20:
+        -:   21:time_t t; // Timer
+        -:   22:
+        -:   23:/**
+        -:   24: * Shaders program
+        -:   25: */
+        -:   26:GLuint prog; // Шейдер фрейм калькуляции буфера
+        -:   27:GLuint prog2; // Шейдер масштабирования и смещения
+        -:   28:
+        -:   29:/**
+        -:   30: * Буферы
+        -:   31: */
+        -:   32:GLenum status;
+        -:   33:GLuint colorBufferID;
+        -:   34:GLuint colorBufferID2;
+        -:   35:GLuint currentBufferID;
+        -:   36:
+        -:   37:GLuint framebuffer;
+        -:   38:GLuint framebuffer2;
+        -:   39:
+        -:   40:struct image {
+        -:   41:    unsigned char r, g, b, a;
+        -:   42:};
+        -:   43:
+        -:   44:
+function throw called 0 returned 0% blocks executed 0%
+    #####:   45:void throw(int error, const char *description) {
+    #####:   46:    fprintf(stderr, "Error: %s\n", description);
+    %%%%%:   46-block  0
+call    0 never executed
+    #####:   47:    exit(EXIT_FAILURE);
+        -:   48:}
+        -:   49:
+function scroll_callback called 0 returned 0% blocks executed 0%
+    #####:   50:void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+    #####:   51:    if (zoom < 0) return;
+    %%%%%:   51-block  0
+branch  0 never executed
+branch  1 never executed
+    %%%%%:   51-block  1
+    #####:   52:    if (yoffset > 0) {
+    %%%%%:   52-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   53:        zoom += 0.1f;
+    %%%%%:   53-block  0
+    #####:   54:    } else if (yoffset < 0) {
+    %%%%%:   54-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   55:        zoom -= 0.1f;
+    %%%%%:   55-block  0
+        -:   56:    }
+    #####:   57:    zoomWidth = (GLsizei) (width * pow(zoom, 3));
+    #####:   58:    zoomHeight = (GLsizei) (height * pow(zoom, 3));
+    %%%%%:   58-block  0
+        -:   59:}
+        -:   60:
+function mouse_button_callback called 0 returned 0% blocks executed 0%
+    #####:   61:void mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    #####:   62:    if (action == GLFW_PRESS) {
+    %%%%%:   62-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   63:        if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+    %%%%%:   63-block  0
+branch  0 never executed
+branch  1 never executed
+        -:   64:
+    #####:   65:        } else if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
+    %%%%%:   65-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   66:            isMoveMode = true;
+    %%%%%:   66-block  0
+        -:   67:        }
+        -:   68:    } else {
+    #####:   69:        if (button == GLFW_MOUSE_BUTTON_MIDDLE) {
+    %%%%%:   69-block  0
+branch  0 never executed
+branch  1 never executed
+    #####:   70:            isMoveMode = false;
+    %%%%%:   70-block  0
+        -:   71:        }
+        -:   72:    }
+    #####:   73:}
+        -:   74:
+function cursor_position_callback called 285 returned 100% blocks executed 67%
+      285:   75:void cursor_position_callback(GLFWwindow *window, double xpos, double ypos) {
+      285:   76:    if (isMoveMode) {
+      285:   76-block  0
+branch  0 taken 0 (fallthrough)
+branch  1 taken 285
+    #####:   77:        vx += (mx - xpos);
+    #####:   78:        vy += (my - ypos) * -1;
+    %%%%%:   78-block  0
+        -:   79:    }
+      285:   80:    mx = xpos;
+      285:   81:    my = ypos;
+      285:   82:}
+        -:   83:
+function key_callback called 0 returned 0% blocks executed 0%
+    #####:   84:void key_callback(GLFWwindow *window, int key, int scancode, int action, int kmode) {
+    %%%%%:   84-block  0
+        -:   85:    if (key == GLFW_KEY_SPACE && action == 1) {
+        -:   86:
+        -:   87:    }
+    #####:   88:}
+        -:   89:
+function loop called 568 returned 100% blocks executed 100%
+      568:   90:void loop() {
+      568:   91:    glBegin(GL_QUADS);
+      568:   91-block  0
+call    0 returned 568
+        -:   92:    //glTexCoord2f(0,0);
+      568:   93:    glVertex2f(-1, -1);
+call    0 returned 568
+        -:   94:
+        -:   95:    //glTexCoord2f(0,1);
+      568:   96:    glVertex2f(-1, 1);
+call    0 returned 568
+        -:   97:
+        -:   98:    //glTexCoord2f(1,1);
+      568:   99:    glVertex2f(1, 1);
+call    0 returned 568
+        -:  100:
+        -:  101:    //glTexCoord2f(1,0);
+      568:  102:    glVertex2f(1, -1);
+call    0 returned 568
+      568:  103:    glEnd();
+call    0 returned 568
+      568:  104:}
+        -:  105:
+function readFile called 3 returned 100% blocks executed 86%
+        3:  106:char *readFile(const char *filaName) {
+        -:  107:    static int length = 8000;
+        3:  108:    char *text = malloc(length);
+        3:  109:    memset(text, 0, length);
+        -:  110:    FILE *f;
+        3:  111:    f = fopen(filaName, "rb");
+        3:  111-block  0
+call    0 returned 3
+        3:  112:    if (f) {
+branch  0 taken 3 (fallthrough)
+branch  1 taken 0
+        3:  113:        fread(text, 1, length, f);
+        3:  113-block  0
+call    0 returned 3
+        3:  114:        fclose(f);
+call    0 returned 3
+        -:  115:    } else {
+    #####:  116:        return NULL;
+    %%%%%:  116-block  0
+        -:  117:    }
+        3:  118:    return text;
+        -:  119:}
+        -:  120:
+function loadShader called 3 returned 100% blocks executed 73%
+        3:  121:GLuint loadShader(const char *fileName, GLuint type) {
+        3:  122:    char *text = readFile(fileName);
+        3:  122-block  0
+call    0 returned 3
+        3:  123:    GLuint shader = glCreateShader(type);
+call    0 returned 3
+        3:  124:    glShaderSource(shader, 1, (const GLchar *const *) &text, NULL);
+call    0 returned 3
+        3:  125:    glCompileShader(shader);
+call    0 returned 3
+        3:  126:    free(text);
+        -:  127:
+        -:  128:    GLsizei oks;
+        -:  129:    GLchar log[1024];
+        3:  130:    glGetShaderiv(shader, GL_COMPILE_STATUS, &oks);
+call    0 returned 3
+        3:  131:    if (!oks) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 3
+    #####:  132:        glGetShaderInfoLog(shader, 1024, NULL, log);
+    %%%%%:  132-block  0
+call    0 never executed
+    #####:  133:        char error[1024] = "Shader compile error: ";
+    #####:  134:        strcat(error, log);
+    #####:  135:        throw(1, error);
+call    0 never executed
+        -:  136:    }
+        3:  137:    return shader;
+        3:  137-block  0
+        -:  138:}
+        -:  139:
+function createShaders called 1 returned 100% blocks executed 73%
+        1:  140:void createShaders() {
+        -:  141:
+        1:  142:    GLuint fragShader = loadShader("/home/bublik/CLionProjects/automat/shader.frag", GL_FRAGMENT_SHADER);
+        1:  142-block  0
+call    0 returned 1
+        1:  143:    GLuint vertexShader = loadShader("/home/bublik/CLionProjects/automat/shader.vert", GL_VERTEX_SHADER);
+call    0 returned 1
+        -:  144:
+        1:  145:    prog = glCreateProgram();
+call    0 returned 1
+        1:  146:    glAttachShader(prog, vertexShader);
+call    0 returned 1
+        1:  147:    glAttachShader(prog, fragShader);
+call    0 returned 1
+        1:  148:    glLinkProgram(prog);
+call    0 returned 1
+        -:  149:
+        -:  150:    GLsizei oks;
+        -:  151:    GLchar log[1024];
+        1:  152:    glGetProgramiv(prog, GL_LINK_STATUS, &oks);
+call    0 returned 1
+        1:  153:    if (!oks) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  154:        glGetProgramInfoLog(prog, 1024, NULL, log);
+    %%%%%:  154-block  0
+call    0 never executed
+    #####:  155:        char error[1024] = "Shader error: ";
+    #####:  156:        strcat(error, log);
+    #####:  157:        throw(1, error);
+call    0 never executed
+        -:  158:    }
+        -:  159:
+        1:  160:    GLuint fragShader2 = loadShader("/home/bublik/CLionProjects/automat/shader2.frag", GL_FRAGMENT_SHADER);
+        1:  160-block  0
+call    0 returned 1
+        1:  161:    prog2 = glCreateProgram();
+call    0 returned 1
+        1:  162:    glAttachShader(prog2, vertexShader);
+call    0 returned 1
+        1:  163:    glAttachShader(prog2, fragShader2);
+call    0 returned 1
+        1:  164:    glLinkProgram(prog2);
+call    0 returned 1
+        1:  165:    glGetProgramiv(prog2, GL_LINK_STATUS, &oks);
+call    0 returned 1
+        1:  166:    if (!oks) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  167:        glGetProgramInfoLog(prog2, 1024, NULL, log);
+    %%%%%:  167-block  0
+call    0 never executed
+    #####:  168:        char error[1024] = "Shader error: ";
+    #####:  169:        strcat(error, log);
+    #####:  170:        throw(1, error);
+call    0 never executed
+        -:  171:    }
+        1:  172:}
+        -:  173:
+function initGL called 1 returned 100% blocks executed 81%
+        1:  174:GLFWwindow* initGL() {
+        1:  175:    glfwSetErrorCallback(throw);
+        1:  175-block  0
+call    0 returned 1
+        1:  176:    if (!glfwInit()) {
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    #####:  177:        throw(1, "Error: glfwInit error");
+    %%%%%:  177-block  0
+call    0 never executed
+        -:  178:    }
+        -:  179:
+        1:  180:    GLFWwindow *window = glfwCreateWindow(width, height, "My Title", NULL, NULL);
+        1:  180-block  0
+call    0 returned 1
+        1:  181:    if (!window) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  182:        glfwTerminate();
+    %%%%%:  182-block  0
+call    0 never executed
+    #####:  183:        throw(1, "Error: glfwCreateWindow error");
+call    0 never executed
+        -:  184:    }
+        -:  185:
+        1:  186:    glfwMakeContextCurrent(window);
+        1:  186-block  0
+call    0 returned 1
+        1:  187:    glfwSetKeyCallback(window, key_callback);
+call    0 returned 1
+        1:  188:    glfwSetCursorPosCallback(window, cursor_position_callback);
+call    0 returned 1
+        1:  189:    glfwSetMouseButtonCallback(window, mouse_button_callback);
+call    0 returned 1
+        1:  190:    glfwSetScrollCallback(window, scroll_callback);
+call    0 returned 1
+        -:  191:
+        1:  192:    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
+call    0 returned 1
+branch  1 taken 0 (fallthrough)
+branch  2 taken 1
+    #####:  193:        throw(1, "Failed to initialize OpenGL context");
+    %%%%%:  193-block  0
+call    0 never executed
+        -:  194:    }
+        1:  195:    glDisable(GL_DEPTH_TEST);
+        1:  195-block  0
+call    0 returned 1
+        1:  196:    glEnable(GL_TEXTURE_2D);
+call    0 returned 1
+        -:  197:
+        1:  198:    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+call    0 returned 1
+        -:  199:
+        1:  200:    return window;
+        -:  201:}
+        -:  202:
+function initBuffers called 1 returned 100% blocks executed 94%
+        1:  203:void initBuffers( struct image *data) {
+        1:  204:    glGenTextures(1, &colorBufferID);
+        1:  204-block  0
+call    0 returned 1
+        1:  205:    glBindTexture(GL_TEXTURE_2D, colorBufferID);
+call    0 returned 1
+        1:  206:    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+call    0 returned 1
+        1:  207:    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+call    0 returned 1
+        1:  208:    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+call    0 returned 1
+        1:  209:    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+call    0 returned 1
+        1:  210:    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+call    0 returned 1
+        1:  211:    glBindTexture(GL_TEXTURE_2D, 0);
+call    0 returned 1
+        -:  212:
+        1:  213:    glGenFramebuffers(1, &framebuffer);
+call    0 returned 1
+        1:  214:    glBindFramebuffer(GL_FRAMEBUFFER, (GLuint) framebuffer);
+call    0 returned 1
+        1:  215:    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferID, 0);
+call    0 returned 1
+        1:  216:    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+call    0 returned 1
+        1:  217:    if (status != GL_FRAMEBUFFER_COMPLETE) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  218:        throw(1, "Buffer create filed");
+    %%%%%:  218-block  0
+call    0 never executed
+        -:  219:    }
+        1:  220:    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        1:  220-block  0
+call    0 returned 1
+        -:  221:
+        1:  222:    glGenTextures(1, &colorBufferID2);
+call    0 returned 1
+        1:  223:    glBindTexture(GL_TEXTURE_2D, colorBufferID2);
+call    0 returned 1
+        1:  224:    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+call    0 returned 1
+        1:  225:    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferID2, 0);
+call    0 returned 1
+        1:  226:    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+call    0 returned 1
+        1:  227:    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+call    0 returned 1
+        1:  228:    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+call    0 returned 1
+        1:  229:    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+call    0 returned 1
+        1:  230:    glBindTexture(GL_TEXTURE_2D, 0);
+call    0 returned 1
+        -:  231:
+        -:  232:
+        1:  233:    glGenFramebuffers(1, &framebuffer2);
+call    0 returned 1
+        1:  234:    glBindFramebuffer(GL_FRAMEBUFFER, (GLuint) framebuffer2);
+call    0 returned 1
+        1:  235:    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorBufferID2, 0);
+call    0 returned 1
+        1:  236:    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+call    0 returned 1
+        1:  237:    if (status != GL_FRAMEBUFFER_COMPLETE) {
+branch  0 taken 0 (fallthrough)
+branch  1 taken 1
+    #####:  238:        throw(1, "Buffer2 create filed");
+    %%%%%:  238-block  0
+call    0 never executed
+        -:  239:    }
+        1:  240:    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        1:  240-block  0
+call    0 returned 1
+        1:  241:}
+        -:  242:
+function calculateBuffers called 284 returned 100% blocks executed 100%
+      284:  243:void calculateBuffers(int frame) {
+      284:  244:    glUseProgram(prog);
+      284:  244-block  0
+call    0 returned 284
+      284:  245:    glViewport(0, 0, (GLsizei) width, (GLsizei) height);
+call    0 returned 284
+      284:  246:    glUniform2f(glGetUniformLocation(prog, "resolution"), (float) width, (float) height);
+call    0 returned 284
+call    1 returned 284
+      284:  247:    if (frame % 2 == 0) {
+branch  0 taken 142 (fallthrough)
+branch  1 taken 142
+      142:  248:        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer2);
+      142:  248-block  0
+call    0 returned 142
+      142:  249:        glBindTexture(GL_TEXTURE_2D, colorBufferID);
+call    0 returned 142
+      142:  250:        glUniform1i(glGetUniformLocation(prog, "SourceTexture"), 0);
+call    0 returned 142
+call    1 returned 142
+      142:  251:        loop();
+call    0 returned 142
+      142:  252:        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+call    0 returned 142
+      142:  253:        currentBufferID = colorBufferID;
+        -:  254:    } else {
+      142:  255:        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+      142:  255-block  0
+call    0 returned 142
+      142:  256:        glBindTexture(GL_TEXTURE_2D, colorBufferID2);
+call    0 returned 142
+      142:  257:        glUniform1i(glGetUniformLocation(prog, "SourceTexture"), 0);
+call    0 returned 142
+call    1 returned 142
+      142:  258:        loop();
+call    0 returned 142
+      142:  259:        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+call    0 returned 142
+      142:  260:        currentBufferID = colorBufferID2;
+        -:  261:    }
+      284:  262:    glUseProgram(0);
+      284:  262-block  0
+call    0 returned 284
+      284:  263:}
+        -:  264:
+function showCurrentBuffer called 284 returned 100% blocks executed 100%
+      284:  265:void showCurrentBuffer() {
+      284:  266:    glUseProgram(prog2);
+      284:  266-block  0
+call    0 returned 284
+      284:  267:    glViewport(0, 0, zoomWidth, zoomHeight);
+call    0 returned 284
+      284:  268:    glBindTexture(GL_TEXTURE_2D, currentBufferID);
+call    0 returned 284
+      284:  269:    glUniform2f(glGetUniformLocation(prog2, "resolution"), (GLfloat) zoomWidth, (GLfloat) zoomHeight);
+call    0 returned 284
+call    1 returned 284
+      284:  270:    glUniform1i(glGetUniformLocation(prog2, "SourceTexture"), 0);
+call    0 returned 284
+call    1 returned 284
+      284:  271:    glUniform2f(glGetUniformLocation(prog2, "shift"), (GLfloat) vx, (GLfloat) vy);
+call    0 returned 284
+call    1 returned 284
+      284:  272:    glLoadIdentity();
+call    0 returned 284
+      284:  273:    loop();
+call    0 returned 284
+      284:  274:    glUseProgram(0);
+call    0 returned 284
+      284:  275:}
+        -:  276:
+        -:  277:
+        -:  278:
+function dispose called 1 returned 100% blocks executed 100%
+        1:  279:void dispose() {
+        1:  280:    glBindTexture(GL_TEXTURE_2D, 0);
+        1:  280-block  0
+call    0 returned 1
+        1:  281:    glDeleteProgram(prog);
+call    0 returned 1
+        1:  282:    glfwTerminate();
+call    0 returned 1
+        1:  283:}
+        -:  284:
+function main called 1 returned 100% blocks executed 100%
+        1:  285:int main() {
+        1:  286:    srand((unsigned) time(&t));
+        1:  286-block  0
+call    0 returned 1
+call    1 returned 1
+        -:  287:
+        1:  288:    GLFWwindow* window = initGL();
+call    0 returned 1
+        1:  289:    createShaders();
+call    0 returned 1
+        -:  290:
+        1:  291:    struct image data[width][height];
+        1:  292:    memset(data, 0, sizeof(data));
+     1001:  293:    for (int j = 0; j < height; j++) {
+     1000:  293-block  0
+     1001:  293-block  1
+branch  0 taken 1000
+branch  1 taken 1 (fallthrough)
+  2001000:  294:        for (int i = 0; i < width; i++) {
+     1000:  294-block  0
+  2000000:  294-block  1
+  2001000:  294-block  2
+branch  0 taken 2000000
+branch  1 taken 1000 (fallthrough)
+  2000000:  295:            if (i % 3 != 0 && j % 3 != 0) {
+  2000000:  295-block  0
+branch  0 taken 1333000 (fallthrough)
+branch  1 taken 667000
+  1333000:  295-block  1
+branch  2 taken 887778 (fallthrough)
+branch  3 taken 445222
+   887778:  296:                data[i][j].r = 255;
+   887778:  296-block  0
+        -:  297://            } else if (i >500 && j > 500) {
+        -:  298://                data[i][j].r = 255;
+        -:  299://            } else if (i % 5 != 0 && j % 5 != 0) {
+        -:  300://                data[i][j].r = 255;
+        -:  301:            } else {
+  1112222:  302:                data[i][j].r = 0;
+  1112222:  302-block  0
+        -:  303:            }
+        -:  304:        }
+        -:  305:    }
+        -:  306:    //data[400][402].r = 255;
+        1:  307:    data[rand() % width][rand() % height].r = 255;
+        1:  307-block  0
+call    0 returned 1
+call    1 returned 1
+        1:  308:    data[rand() % width][rand() % height].r = 255;
+call    0 returned 1
+call    1 returned 1
+        1:  309:    data[rand() % width][rand() % height].r = 255;
+call    0 returned 1
+call    1 returned 1
+        1:  310:    data[rand() % width][rand() % height].r = 255;
+call    0 returned 1
+call    1 returned 1
+        1:  311:    data[rand() % width][rand() % height].r = 255;
+call    0 returned 1
+call    1 returned 1
+        -:  312:
+        1:  313:    initBuffers( *data);
+call    0 returned 1
+        -:  314:
+        1:  315:    int i = 0;
+        1:  316:    zoomWidth = width;
+        1:  317:    zoomHeight = height;
+        -:  318:
+        -:  319:    do {
+      284:  320:        glfwPollEvents();
+      284:  320-block  0
+call    0 returned 284
+      284:  321:        glClear(GL_COLOR_BUFFER_BIT);
+call    0 returned 284
+        -:  322:
+      284:  323:        calculateBuffers(i);
+call    0 returned 284
+      284:  324:        showCurrentBuffer();
+call    0 returned 284
+        -:  325:
+      284:  326:        glfwSwapBuffers(window);
+call    0 returned 284
+        -:  327:
+      284:  328:        if (i % 100 == 0) {
+branch  0 taken 3 (fallthrough)
+branch  1 taken 281
+        3:  329:            printf("%d\n", i);
+        3:  329-block  0
+call    0 returned 3
+        -:  330:        }
+        -:  331:        //sleep(5);
+        -:  332:        //printf("Tick\n");
+        -:  333:        //sleep(3);
+        -:  334:        //usleep(50000);
+      284:  335:        i++;
+      284:  336:    } while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
+      284:  336-block  0
+call    0 returned 284
+branch  1 taken 284 (fallthrough)
+branch  2 taken 0
+      284:  336-block  1
+call    3 returned 284
+branch  4 taken 283
+branch  5 taken 1 (fallthrough)
+        -:  337:
+        1:  338:    dispose();
+        1:  338-block  0
+call    0 returned 1
+        1:  339:    return 0;
+        -:  340:}

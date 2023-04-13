@@ -1,0 +1,4 @@
+/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/glad.dir
+/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/automat.dir
+/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/edit_cache.dir
+/home/bublik/CLionProjects/automat/cmake-build-debug-coverage/CMakeFiles/rebuild_cache.dir

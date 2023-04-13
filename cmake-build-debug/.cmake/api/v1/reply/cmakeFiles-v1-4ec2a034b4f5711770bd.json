@@ -1,0 +1,113 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.22.3/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/CMakeFiles/3.22.3/CMakeCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Platform/Linux.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Compiler/GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/bublik/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3ConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Config.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets-none.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/home/bublik/CLionProjects/automat/cmake-build-debug",
+		"source" : "/home/bublik/CLionProjects/automat"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

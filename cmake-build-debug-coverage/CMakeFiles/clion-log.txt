@@ -1,0 +1,16 @@
+"/home/bublik/Загрузки/CLion-2022.1.1 (1)/clion-2022.1.1/bin/cmake/linux/bin/cmake" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=/home/bublik/Загрузки/CLion-2022.1.1 (1)/clion-2022.1.1/bin/ninja/linux/ninja" -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage -G Ninja -S /home/bublik/CLionProjects/automat -B /home/bublik/CLionProjects/automat/cmake-build-debug-coverage
+-- The C compiler identification is GNU 9.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_CXX_FLAGS
+
+
+-- Build files have been written to: /home/bublik/CLionProjects/automat/cmake-build-debug-coverage
